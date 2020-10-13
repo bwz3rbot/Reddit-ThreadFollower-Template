@@ -39,6 +39,12 @@ const getSubmission = function () {
 // 2. [Assign First UTC]
 const assignFirstUTC = function (thread) {
     console.log("assigning the first")
+    if (thread.comments.length === 0) {
+        console.log("Length of comments object was 0. Initializing with a comment!".yellow)
+        return snoowrap.getSubmission(process.env.THREAD_ID).reply("Beep Boop I am a bot.")
+            .then(streamUnreads)
+            .catch(err => console.log)
+    }
     previousCommentUTC = parseInt(thread.comments[0].created_utc)
     let count = 0;
     thread.comments.forEach(comment => {
